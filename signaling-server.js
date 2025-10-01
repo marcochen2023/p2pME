@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 class SignalingServer {
-    constructor(port = 8080) {
+    constructor(port = 8081) {
         this.port = port;
         this.clients = new Map(); // nodeId -> WebSocket
         this.server = null;
@@ -315,7 +315,7 @@ class SignalingServer {
 
 // 如果直接執行此檔案，啟動伺服器
 if (require.main === module) {
-    const port = process.env.PORT || 8080;
+    const port = process.env.PORT || 8081;
     const server = new SignalingServer(port);
 
     // 處理程序退出

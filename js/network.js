@@ -83,7 +83,7 @@ class NetworkManager {
     async connectToSignalingServer() {
         return new Promise((resolve, reject) => {
             // 使用 WebSocket 連接到本地信令伺服器
-            const wsUrl = `ws://localhost:8080`;
+            const wsUrl = `ws://localhost:8081`;
             this.signalingServer = new WebSocket(wsUrl);
 
             this.signalingServer.onopen = () => {

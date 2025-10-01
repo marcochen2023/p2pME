@@ -1,0 +1,38 @@
+{
+  "name": "p2pme",
+  "version": "1.0.0",
+  "description": "去中心化點對點連線工具 - 無需帳號、安裝或中間伺服器",
+  "main": "signaling-server.js",
+  "scripts": {
+    "start": "node signaling-server.js",
+    "dev": "nodemon signaling-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "p2p",
+    "webrtc",
+    "blockchain",
+    "file-sharing",
+    "decentralized",
+    "peer-to-peer"
+  ],
+  "author": "p2pME Team",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/p2pME.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/p2pME/issues"
+  },
+  "homepage": "https://github.com/your-username/p2pME#readme"
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>p2pME - 點對點連線工具</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-network-wired"></i>
+                <h1>p2pME</h1>
+            </div>
+            <p class="subtitle">去中心化點對點連線工具 - 無需帳號、安裝或中間伺服器</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 連線狀態面板 -->
+            <div class="status-panel">
+                <div class="status-item">
+                    <i class="fas fa-circle" id="connection-status"></i>
+                    <span id="connection-text">離線</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-users"></i>
+                    <span id="peer-count">0 個節點</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-cube"></i>
+                    <span id="block-count">0 個區塊</span>
+                </div>
+            </div>
+
+            <!-- 功能選項卡 -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="file-transfer">
+                    <i class="fas fa-file-export"></i>
+                    檔案傳輸
+                </button>
+                <button class="tab-button" data-tab="ledger">
+                    <i class="fas fa-book"></i>
+                    分散式帳本
+                </button>
+                <button class="tab-button" data-tab="network">
+                    <i class="fas fa-project-diagram"></i>
+                    網路狀態
+                </button>
+            </div>
+
+            <!-- 檔案傳輸面板 -->
+            <div class="tab-content active" id="file-transfer">
+                <div class="panel">
+                    <h3><i class="fas fa-upload"></i> 分享檔案</h3>
+                    <div class="file-drop-zone" id="file-drop-zone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>拖拽檔案到此處或點擊選擇</p>
+                        <input type="file" id="file-input" multiple hidden>
+                    </div>
+                    <div class="shared-files" id="shared-files"></div>
+                </div>
+
+                <div class="panel">
+                    <h3><i class="fas fa-download"></i> 可下載檔案</h3>
+                    <div class="available-files" id="available-files">
+                        <p class="no-files">目前沒有可下載的檔案</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分散式帳本面板 -->
+            <div class="tab-content" id="ledger">
+                <div class="panel">
+                    <h3><i class="fas fa-plus-circle"></i> 新增交易</h3>
+                    <div class="transaction-form">
+                        <input type="text" id="tx-to" placeholder="接收者 ID">
+                        <input type="number" id="tx-amount" placeholder="金額" min="0" step="0.01">
+                        <input type="text" id="tx-memo" placeholder="備註 (可選)">
+                        <button id="create-transaction">
+                            <i class="fas fa-paper-plane"></i>
+                            發送交易
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3><i class="fas fa-history"></i> 交易歷史</h3>
+                    <div class="transaction-pool" id="transaction-pool">
+                        <p class="no-transactions">目前沒有交易記錄</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3><i class="fas fa-cubes"></i> 區塊鏈</h3>
+                    <div class="blockchain" id="blockchain">
+                        <p class="no-blocks">區塊鏈尚未初始化</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 網路狀態面板 -->
+            <div class="tab-content" id="network">
+                <div class="panel">
+                    <h3><i class="fas fa-cog"></i> 節點設定</h3>
+                    <div class="node-config">
+                        <label for="node-id">節點 ID:</label>
+                        <input type="text" id="node-id" readonly>
+                        <button id="generate-id">
+                            <i class="fas fa-refresh"></i>
+                            重新生成
+                        </button>
+                    </div>
+                    <div class="connection-controls">
+                        <button id="start-node" class="primary">
+                            <i class="fas fa-play"></i>
+                            啟動節點
+                        </button>
+                        <button id="stop-node" class="secondary" disabled>
+                            <i class="fas fa-stop"></i>
+                            停止節點
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3><i class="fas fa-users"></i> 連線的節點</h3>
+                    <div class="peer-list" id="peer-list">
+                        <p class="no-peers">目前沒有連線的節點</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3><i class="fas fa-terminal"></i> 系統日誌</h3>
+                    <div class="log-container">
+                        <div class="log-output" id="log-output"></div>
+                        <button id="clear-log">
+                            <i class="fas fa-trash"></i>
+                            清除日誌
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入中覆蓋層 -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>正在初始化...</p>
+        </div>
+    </div>
+
+    <!-- 通知系統 -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <!-- JavaScript 模組 -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.1/simplepeer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/crypto.js"></script>
+    <script src="js/network.js"></script>
+    <script src="js/fileTransfer.js"></script>
+    <script src="js/blockchain.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

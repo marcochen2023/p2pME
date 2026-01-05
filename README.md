@@ -40,7 +40,7 @@ p2pME 是一個基於瀏覽器的點對點連線工具，讓您可以直接分�
 
 1. **克隆專案**
    ```bash
-   git clone https://github.com/your-username/p2pME.git
+   git clone https://github.com/marcochen2023/p2pME.git
    cd p2pME
    ```
 
@@ -53,7 +53,7 @@ p2pME 是一個基於瀏覽器的點對點連線工具，讓您可以直接分�
    ```bash
    npm start
    ```
-   信令伺服器將在 `ws://localhost:8080` 運行
+   信令伺服器將在 `ws://localhost:8081` 運行
 
 4. **啟動 Web 伺服器**
    
@@ -172,7 +172,7 @@ p2pME 是一個基於瀏覽器的點對點連線工具，讓您可以直接分�
 ```javascript
 // 在 network.js 中修改
 const config = {
-    signalingServer: 'ws://localhost:8080',
+    signalingServer: 'ws://localhost:8081',
     iceServers: [
         { urls: 'stun:stun.l.google.com:19302' }
     ],
@@ -314,7 +314,7 @@ location.reload();
 ## 📞 聯絡方式
 
 如有問題或建議，請：
-- 開啟 [Issue](https://github.com/your-username/p2pME/issues)
+- 開啟 [Issue](https://github.com/marcochen2023/p2pME/issues)
 - 發送郵件至 your-email@example.com
 
 ---
